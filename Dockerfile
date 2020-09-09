@@ -2,6 +2,8 @@
 # We Use an official Python runtime as a parent image
 FROM python:3.8
 
+LABEL Author="MichaelFrohlich"
+
 RUN python -m pip install poetry &&\
   pip install pip==20.0.2 &&\
   apt update

@@ -3,6 +3,15 @@ version: '3'
 # Build a multiservice arhitecture.
 services:
   # Create a service called web
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - pgdata:/var/lib/posgresql/data
+
   web:
     # Build an image from the files in the project root directory (Dockerfile)
     build: .
@@ -17,3 +26,5 @@ services:
     # our host machine by visiting 127.0.0.1:9090
     ports:
       - "9090:8000"
+volumes:
+  pgdata:

@@ -7,6 +7,11 @@ authors = ["Michael Frohlich <mike.frohl@gmail.com>"]
 [tool.poetry.dependencies]
 python = "^3.8"
 djangorestframework = "^3.11.1"
+markdown = "^3.2.2"
+django-filter = "^2.3.0"
+psycopg2 = "^2.8.6"
+pytest-django = "^3.9.0"
+django-phone-field = "^1.8.1"
 
 [tool.poetry.dev-dependencies]
 
