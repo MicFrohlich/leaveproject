@@ -2,29 +2,50 @@ version: '3'
 
 # Build a multiservice arhitecture.
 services:
-  # Create a service called web
-  db:
-    image: postgres
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_DB: postgres
-      POSTGRES_PASSWORD: postgres
+  data:
+    restart: always
+    image: alpine
     volumes:
-      - pgdata:/var/lib/posgresql/data
+      - /var/lib/postgresql
+    command: "true"
+
+  db:
+    restart: always
+    image: postgres:latest
+    volumes:
+      - ./postgres/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+      - ./backups/postgresql:/backup
+    env_file:
+      - .env
+    expose:
+      - "5432"
 
   web:
-    # Build an image from the files in the project root directory (Dockerfile)
+    restart: always
     build: .
     # Assigns a name for the container. If no name is specified,
     # Docker will assign the container a random name
     container_name: drf_app
+    env_file:
+      - .env
     # Mount the container `/drf` folder to the a `src` folder in the location
     # of the Dockerfile on the host machine.
     volumes:
       - ./src:/drf
-    # Map port 8000 to port 9090 so that we can access the application on
-    # our host machine by visiting 127.0.0.1:9090
+
+    command: gunicorn leaveproject.wsgi:application -b 0.0.0.0:8000
+    # Map port 8000 to port 8000 so that we can access the application on
+    # our host machine by visiting 127.0.0.1:8000
     ports:
-      - "9090:8000"
+      - "8000:8000"
+
+  nginx:
+    restart: always
+    build: .
+    ports:
+      - "80:80"
+    links:
+      - web:web
+
 volumes:
   pgdata:
