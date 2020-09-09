@@ -1,0 +1,11 @@
+Metadata-Version: 1.2
+Name: leaveproject
+Version: 0.1.0
+Summary: Test project to demonstrate abilities
+Home-page: UNKNOWN
+Author: Michael Frohlich
+Author-email: mike.frohl@gmail.com
+License: UNKNOWN
+Description: UNKNOWN
+Platform: UNKNOWN
+Requires-Python: >=3.8,<4.0

@@ -13,12 +13,13 @@ RUN poetry config virtualenvs.create false &&\
 
 COPY . /srv/app/
 
-RUN useradd -r -s /sbin/nologin app
-RUN chown -R app:app /srv/app
-USER app
+RUN ls .
 
-CMD ["sh", "-c", "python manage.py make_default_admin \
-      && python manage.py make_default_groups_and_permissions \
-      && python manage.py make_fellowship_application_university_assessment \
-      && python manage.py make_deadlines \
-      && gunicorn -w 3 -k uvicorn.workers.UvicornWorker agof_ssp.asgi:application --bind 0.0.0.0:8000"]
+# Install any needed packages specified in requirements.txt
+RUN poetry install
+
+VOLUME /app
+
+EXPOSE 8080
+
+CMD python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000
