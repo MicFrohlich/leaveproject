@@ -14,7 +14,7 @@ class EmployeeTest(TestCase):
         self.password = "z"
 
         self.test_user = Employee.objects.create(
-            emp_number=self.username,
+            emp_number=self.employee_number,
             phone_number=self.phone_number,
             first_name=self.first_name,
             last_name=self.last_name
