@@ -26,6 +26,7 @@ services:
     # of the Dockerfile on the host machine.
     volumes:
       - ./src:/drf
+      - ./static/static_root/:/app/static/static_root
 
     command: gunicorn leaveproject.wsgi:application -b 0.0.0.0:8000
     # Map port 8000 to port 8000 so that we can access the application on
@@ -42,6 +43,8 @@ services:
       - "80:80"
     links:
       - web:web
+    volumes:
+    - ./static/static_root/:/static
 
 volumes:
   pgdata:

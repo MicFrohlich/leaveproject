@@ -15,8 +15,6 @@ RUN poetry config virtualenvs.create false &&\
 
 COPY . /srv/app/
 
-RUN ls .
-
 # Install any needed packages specified in requirements.txt
 RUN poetry install
 
@@ -24,4 +22,12 @@ VOLUME /app
 
 EXPOSE 8080
 
-CMD python manage.py makemigrations && python manage.py migrate && python manage.py createsuperuser && python manage.py runserver 0.0.0.0:8000
+CMD  python manage.py makemigrations &&\
+  python manage.py migrate --fake &&\
+  python manage.py migrate --fake-initial &&\
+  python manage.py migrate &&\
+  python manage.py createsuperuser &&\
+  python manage.py collectstatic --noinput &&\
+  python manage.py runserver 0.0.0.0:8000
+
+COPY ./static /static/
