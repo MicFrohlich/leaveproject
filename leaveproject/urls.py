@@ -20,8 +20,8 @@ from rest_framework import routers
 from leave.views import EmployeeViewSet, EmployeeLeaveViewSet
 
 router = routers.DefaultRouter()
-router.register(r"employees", EmployeeViewSet)
-router.register(r"leave", EmployeeLeaveViewSet)
+router.register(r"employees", EmployeeViewSet, basename="employee")
+router.register(r"leave", EmployeeLeaveViewSet, basename="leave")
 
 urlpatterns = [
     path("admin/", admin.site.urls),
