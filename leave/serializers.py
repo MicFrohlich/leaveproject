@@ -24,3 +24,12 @@ class EmployeeLeaveSerializer(serializers.ModelSerializer):
             "days_of_leave",
             "status"
         ]
+        read_only_fields = ['days_of_leave']
+
+    def validate(self, data):
+        """Assert that End date not before start date"""
+        if data["end_date"] < data["start_date"]:
+            raise serializers.ValidationError({
+                "end_date": "cannot have end date before start date"
+            })
+        return data

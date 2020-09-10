@@ -21,3 +21,9 @@ class EmployeeLeave(models.Model):
     end_date = models.DateTimeField(blank=True)
     days_of_leave = models.IntegerField(blank=True)
     status = models.CharField(max_length=15, choices=leave_statuses)
+
+    def save(self, *args, **kwargs):
+        if not self.days_of_leave:
+            self.days_of_leave = self.end_date - self.start_date
+            self.days_of_leave = self.days_of_leave.days
+        return super().save(*args, **kwargs)
