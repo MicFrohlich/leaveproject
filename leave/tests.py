@@ -17,7 +17,7 @@ class EmployeeTest(TestCase):
             emp_number=self.employee_number,
             phone_number=self.phone_number,
             first_name=self.first_name,
-            last_name=self.last_name
+            last_name=self.last_name,
         )
 
     def test_create_employee(self):
