@@ -22,7 +22,7 @@ class EmployeeLeave(models.Model):
         ("Declined", "D"),
     ]
 
-    employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name="leave_for_employee")
     start_date = models.DateTimeField(blank=True, default=datetime.date.today)
     end_date = models.DateTimeField(blank=True, default=datetime.date.today)
     days_of_leave = models.IntegerField(blank=True)
