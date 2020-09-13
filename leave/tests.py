@@ -65,7 +65,7 @@ class EmployeeTest(TestCase):
                 "last_name": "Test"
             },
         )
-        self.assertEqual(response.status_code, status.HTTP_401_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
     @pytest.mark.django_db
     def test_can_create_employee_when_logged_in(self):
@@ -79,4 +79,4 @@ class EmployeeTest(TestCase):
                 "last_name": "Test"
             },
         )
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
