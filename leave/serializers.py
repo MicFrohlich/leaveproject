@@ -22,7 +22,7 @@ class EmployeeLeaveSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = EmployeeLeave
-        fields = ["employee", "start_date", "end_date", "days_of_leave", "status"]
+        fields = ["employee", "start_date", "end_date", "status"]
         read_only_fields = ["days_of_leave"]
         validators = [
             UniqueTogetherValidator(
