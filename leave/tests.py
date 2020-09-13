@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.test import TestCase, Client
 
 # Create your tests here.
@@ -20,6 +21,10 @@ class EmployeeTest(TestCase):
         self.password = "z"
         self.factory = APIRequestFactory()
         self.client = Client()
+        self.user = User.objects.create(
+            username="username",
+            password="TestUserPassword"
+        )
 
         self.test_user = Employee.objects.create(
             emp_number=self.employee_number,
@@ -40,6 +45,7 @@ class EmployeeTest(TestCase):
 
     @pytest.mark.django_db
     def test_get_employee(self):
+        self.client.force_login(self.user)
         response = self.client.get(
             reverse("employee-list")
         )
@@ -59,10 +65,11 @@ class EmployeeTest(TestCase):
                 "last_name": "Test"
             },
         )
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_401_FORBIDDEN)
 
     @pytest.mark.django_db
     def test_can_create_employee_when_logged_in(self):
+        self.client.force_login(self.user)
         response = self.client.post(
             reverse("employee-list"),
             data={
@@ -72,4 +79,4 @@ class EmployeeTest(TestCase):
                 "last_name": "Test"
             },
         )
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
