@@ -39,7 +39,33 @@ class EmployeeLeaveSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 {"end_date": "cannot have end date before start date"}
             )
-
+        if data["end_date"].month < data["start_date"].month:
+            raise serializers.ValidationError(
+                {"end_date": "cannot have end date before start date"}
+            )
+        if data["end_date"].year < data["start_date"].year:
+            raise serializers.ValidationError(
+                {"end_date": "cannot have end date before start date"}
+            )
+        if data["start_date"].day == data["end_date"].day:
+            if data["end_date"].hour < data["start_date"].hour:
+                raise serializers.ValidationError(
+                    {"end_date": "cannot have end date before start date"}
+                )
+            else:
+                if data["end_date"].minute < data["start_date"].minute:
+                    raise serializers.ValidationError(
+                        {"end_date": "cannot have end date before start date"}
+                    )
+                else:
+                    if data["end_date"].second < data["start_date"].second:
+                        raise serializers.ValidationError(
+                            {"end_date": "cannot have end date before start date"}
+                        )
+                    elif data["end_date"].second == data["start_date"].second:
+                        raise serializers.ValidationError(
+                            {"start_date": "cannot log leave with no leave"}
+                        )
         return data
 
     def is_valid(self, raise_exception=False):

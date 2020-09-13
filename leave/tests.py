@@ -57,3 +57,15 @@ class EmployeeTest(TestCase):
             },
         )
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_can_create_employee_when_logged_in(self):
+        response = self.client.post(
+            reverse("employee-list"),
+            data={
+                "emp_number": "D1234",
+                "phone_number": 27844444948,
+                "first_name": "Mike",
+                "last_name": "Test"
+            },
+        )
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
