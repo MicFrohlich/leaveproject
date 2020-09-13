@@ -27,6 +27,9 @@ class EmployeeLeaveSerializer(serializers.ModelSerializer):
         validators = [
             UniqueTogetherValidator(
                 queryset=EmployeeLeave.objects.all(), fields=["employee", "start_date"]
+            ),
+            UniqueTogetherValidator(
+                queryset=EmployeeLeave.objects.all(), fields=["employee", "end_date"]
             )
         ]
 

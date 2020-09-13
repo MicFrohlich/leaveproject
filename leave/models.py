@@ -1,9 +1,11 @@
+from django.contrib.auth.models import User
 from django.db import models
 from phone_field import PhoneField
 import datetime
 
 
 class Employee(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
     emp_number = models.CharField(max_length=20, blank=True)
     phone_number = PhoneField(blank=True, help_text="Contact phone number")
     first_name = models.CharField(max_length=50, blank=True)
