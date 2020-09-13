@@ -43,7 +43,7 @@ http://localhost:8000/api/
 
 ### Testing
 
-to run tests, please make sure the containers are built and running, then run:
+to run tests, please make sure you've run makemigrations and migrate in the root directory, then run:
 
     pytest
     
